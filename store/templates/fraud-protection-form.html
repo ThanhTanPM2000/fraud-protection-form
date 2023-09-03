@@ -1,0 +1,89 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link rel="stylesheet" href="{% static 'css/form.css' %}" />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0"
+    />
+    <style>
+      body {
+        background-image: url("{% static 'images/background.svg' %}");
+      }
+    </style>
+  </head>
+  <body>
+    <div class="card">
+      <form
+        class="form"
+        method="POST"
+        novalidate
+        oncopy="return false;"
+        onpaste="return false;"
+      >
+        {% csrf_token %}
+
+        <div class="form-item ten-item">
+          <span class="form-item-icon material-symbols-outlined">person</span>
+          {{form.ten}}
+        </div>
+        <div class="form-item phone-item">
+          <span class="form-item-icon material-symbols-outlined"
+            >Phone_iphone</span
+          >
+          {{form.so_dien_thoai}}
+        </div>
+        <div class="form-item dia_chi-item">
+          <span class="form-item-icon material-symbols-outlined">
+            alternate_email
+          </span>
+          {{ form.dia_chi }}
+        </div>
+        <div class="form-item san_pham-item">
+          <span class="form-item-icon material-symbols-outlined">
+            inventory_2
+          </span>
+          {{ form.san_pham }}
+        </div>
+        <div class="form-item">
+          <button class="btn-submit">Đặt hàng ngay</button>
+        </div>
+        {% for error in form.non_field_errors %}
+        <div class="form-item-errors">
+          <p class="error-message">{{ error }}</p>
+        </div>
+        {% endfor %} {% if form.dia_chi.errors %}
+        <div class="form-item-errors">
+          <p class="error-message">{{ form.dia_chi.errors.0 }}</p>
+        </div>
+        {% elif form.ten.errors %}
+        <div class="form-item-errors">
+          <p class="error-message">{{ form.ten.errors.0 }}</p>
+        </div>
+        {% elif form.so_dien_thoai.errors %}
+        <div class="form-item-errors">
+          <p class="error-message">{{ form.so_dien_thoai.errors.0 }}</p>
+        </div>
+        {% elif form.san_pham.errors %}
+        <div class="form-item-errors">
+          <p class="error-message">{{ form.san_pham.errors.0 }}</p>
+        </div>
+        {% endif %}
+      </form>
+    </div>
+    <script>
+      window.onload = function () {
+        var form = document.querySelector(".form");
+        var ten = document.querySelector(".ten-item");
+        var phone = document.querySelector(".phone-item");
+        if (Math.random() < 0.5) {
+          form.insertBefore(phone, ten);
+        }
+      };
+    </script>
+  </body>
+</html>

@@ -1,0 +1,18 @@
+{% load i18n admin_urls admin_list %} {% for result in results %} {% for
+action_checkbox in result %} {# first column in table is always for the action
+checkbox #}
+<td {% if action_checkbox.row_checkbox %}class="action-checkbox" {% endif %}>
+  {{ action_checkbox.contents|safe }}
+</td>
+{% endfor %} {% for field in result %} {% if field.field_admin %}
+<td class="{{ field.field_name }}">
+  {# Call the admin's method instead of the model's attribute #}
+  <a href="{% url field.field_admin_url %}">{{ field.contents }}</a>
+</td>
+{% else %}
+<td
+  class="{{ field.field_name }} {% if field.field_name == 'du_doan' and field.contents == 'SPAM' %}red{% elif field.field_name == 'du_doan' and field.contents == 'ACTUAL' %}green{% endif %}"
+>
+  {{ field.contents }}
+</td>
+{% endif %} {% endfor %} {% endfor %}
